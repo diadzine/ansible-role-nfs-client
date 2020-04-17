@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Aymeric Bringard <diadzine@gmail.com>
+  description: NFS client installation.
+  company: "Aymeric Bringard, Conseil & Developpements"
+  license: license (MIT)
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+  - name: Debian
+
+  galaxy_tags:
+    - system
+
+dependencies: []

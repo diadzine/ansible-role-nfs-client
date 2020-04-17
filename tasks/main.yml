@@ -1,0 +1,30 @@
+---
+# file: tasks/main.yml
+
+- name: Install NFS dependencies
+  apt:
+    name: nfs-common
+    state: present
+  register: result
+  until: result is success
+  retries: 5
+  delay: 5
+
+- name: Create mount directory
+  file:
+    path: "{{ item.mount_point }}"
+    state: directory
+    owner: "{{ item.mount_owner }}"
+    group: "{{ item.mount_group }}"
+  with_items:
+    - "{{ nfs_shares }}"
+
+- name: Mount NFS Shares
+  mount:
+    src: "{{ item.share }}"
+    name: "{{ item.mount_point }}"
+    fstype: nfs
+    state: mounted
+    opts: "{{ item.mount_opts | default('defaults') }}"
+  with_items:
+    - "{{ nfs_shares }}"
